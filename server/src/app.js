@@ -9,9 +9,9 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/status', (req, res) => {
+app.post('/register', (req, res) => {
    res.send({
-      message: 'Fuck you, Cameroon'
+      message: `Hello, ${req.body.email}. You aren\'t the you you think you are.`
    })
 })
 
