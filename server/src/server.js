@@ -9,7 +9,6 @@ const app = express();
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(bodyParser.text());
 app.use(cors());
 
 require('./routes')(app);
