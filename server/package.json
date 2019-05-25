@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch src --exec npm run server",
-    "server": "node src/app.js",
-    "lint": "eslint **/*.js"
+    "server": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,8 +15,11 @@
     "cors": "^2.8.5",
     "eslint": "^5.16.0",
     "express": "^4.17.0",
+    "joi": "^14.3.1",
     "morgan": "^1.9.1",
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "sequelize": "^5.8.6",
+    "sqlite3": "^4.0.8"
   },
   "devDependencies": {
     "eslint-plugin-vue": "^5.2.2"

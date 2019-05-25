@@ -1,7 +1,7 @@
-import API from './API';
+import API from './API'
 
 export default {
-   register (credentials) {
-      return API().post('/register', credentials);
+   register(credentials) {
+      return API().post('/register', credentials)
    }
 }
