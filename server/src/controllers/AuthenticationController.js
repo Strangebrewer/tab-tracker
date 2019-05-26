@@ -12,9 +12,8 @@ function jwtSignUser(user) {
 module.exports = {
    async register(req, res) {
       try {
-         console.log('req.body:::', req.body);
          const user = await User.create(req.body)
-         res.json(user);
+         res.json({ user, token: jwtSignUser(user.toJSON()) });
       } catch (err) {
          res.status(400).send({
             error: 'This email account is already in use.'
@@ -29,18 +28,20 @@ module.exports = {
             where: { email: email }
          });
 
+         console.log('user in login ctrlr:::', user);
+
          const login_error = { error: 'That\'s bogus info, doofy' }
          if (!user)
-            return res.status(403).send(login_error)
+            return res.status(403).send({ error: 'That\'s a bogus email, doofy' })
 
          const isPasswordValid = user.comparePassword(password);
          if (!isPasswordValid)
-            return res.status(403).send(login_error)
+            return res.status(403).send({ error: 'That\'s a bogus password, doofy' })
 
          res.json({ user, token: jwtSignUser(user.toJSON()) });
       } catch (e) {
          res.send({
-            error: e
+            error: e.message
          })
       }
    },

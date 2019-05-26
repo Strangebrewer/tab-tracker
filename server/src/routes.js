@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
+const SongsController = require('./controllers/SongsController');
 
 
 module.exports = (app) => {
@@ -8,6 +9,13 @@ module.exports = (app) => {
       AuthenticationController.register
    );
    app.post('/login', AuthenticationController.login);
+
+   app.get('/songs', SongsController.index);
+   app.post('/songs', SongsController.post);
+   app.delete('/songs/:id', SongsController.deleteAll);
+   app.delete('/songs', SongsController.deleteAll);
+
+
    app.get('/users', AuthenticationController.getAllUsers);
    app.delete('/users', AuthenticationController.deleteAllUsers);
 }

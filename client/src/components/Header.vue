@@ -5,14 +5,15 @@
 		</v-toolbar-title>
 
 		<v-toolbar-items>
-			<v-btn flat>Browse</v-btn>
+			<v-btn flat @click="navigateTo({ name: 'songs' })">Browse</v-btn>
 		</v-toolbar-items>
 
 		<v-spacer></v-spacer>
 
 		<v-toolbar-items>
-			<v-btn flat @click="navigateTo({ name: 'login' })">Login</v-btn>
-			<v-btn flat @click="navigateTo({ name: 'register' })">Sign Up</v-btn>
+			<v-btn v-if="!$store.state.isUserLoggedIn" flat @click="navigateTo({ name: 'login' })">Log In</v-btn>
+			<v-btn v-if="!$store.state.isUserLoggedIn" flat @click="navigateTo({ name: 'register' })">Sign Up</v-btn>
+			<v-btn v-if="$store.state.isUserLoggedIn" flat @click="logout">Log Out</v-btn>
 		</v-toolbar-items>
 	</v-toolbar>
 </template>
@@ -23,7 +24,12 @@ export default {
 	methods: {
 		navigateTo(route) {
 			this.$router.push(route);
-		}
+		},
+		logout() {
+         this.$store.dispatch('setUser', null);
+         this.$store.dispatch('setToken', null);
+         this.$router.push({ name: 'root' });
+      }
 	}
 };
 </script>
@@ -31,6 +37,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .toolbar-title {
-   cursor: pointer;
+	cursor: pointer;
 }
 </style>
