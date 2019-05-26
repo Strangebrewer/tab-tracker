@@ -1,38 +1,92 @@
 <template>
 	<v-layout row wrap>
 		<v-flex xs6 offset-xs3>
-         <panel title="Songs">
-            <div v-for="song in songs" :key="song.title">
-               {{song.title}}
-               {{song.artist}}
-               {{song.album}}
-            </div>
-         </panel>
+			<panel title="Songs">
+				<div class="song" v-for="song in songs" :key="song.title">
+					<v-layout>
+						<v-flex xs6>
+							<div class="song-title">{{song.title}}</div>
+							<div class="song-artist">{{song.artist}}</div>
+							<div class="song-genre">{{song.genre}}</div>
+							<v-btn
+								class="cyan"
+								@click="navigateTo({name: 'song', params: {songId: song.id}})"
+								dark
+							>View</v-btn>
+						</v-flex>
+
+						<v-flex xs6>
+							<img class="album-image" :src="song.albumImageUrl">
+						</v-flex>
+					</v-layout>
+				</div>
+				<v-btn
+					slot="action"
+					@click="navigateTo({name: 'songs-create'})"
+					class="cyan accent-2"
+					light
+					medium
+					absolute
+					right
+					middle
+					fab
+				>
+					<v-icon>add</v-icon>
+				</v-btn>
+			</panel>
 		</v-flex>
 	</v-layout>
 </template>
 
 <!-- Everything inside the script tag controls the template -->
 <script>
-import SongsService from '../services/SongsService'
-import Panel from '../components/Panel'
+import SongsService from "../services/SongsService";
+import Panel from "../components/Panel";
 export default {
-   components: {
-      Panel
-   },
-   data () {
-      return {
-         songs: null
-      }
-   },
-   methods: {},
-   async mounted () {
-      // TODO: Make a call to the db to get songs
-      this.songs = await SongsService.index();
-   }
+	components: {
+		Panel
+	},
+	data() {
+		return {
+			songs: null
+		};
+	},
+	methods: {
+		navigateTo(route) {
+			this.$router.push(route);
+		}
+	},
+	async mounted() {
+		// TODO: Make a call to the db to get songs
+		this.songs = (await SongsService.index()).data;
+	}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.song {
+	padding: 20px;
+	height: 330px;
+	overflow: hidden;
+	margin: 10px;
+	border: 1px solid red;
+}
+.no-underline {
+	text-decoration: none;
+	color: white;
+}
+.album-image {
+	width: 70%;
+	margin: 0 auto;
+}
+.song-title {
+	font-size: 30px;
+}
+.song-artist {
+	font-size: 24px;
+}
+.song-genre {
+	font-size: 18px;
+}
 </style>

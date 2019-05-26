@@ -12,6 +12,18 @@ module.exports = {
       }
    },
 
+   async show(req, res) {
+      console.log('req.params:::', req.params.songId);
+      try {
+         const song = await db.Song.findByPk(req.params.songId);
+         res.json(song);
+      } catch (err) {
+         res.status(500).send({
+            error: 'An error has occured trying to fetch songs.'
+         })
+      }
+   },
+
    async post(req, res) {
       console.log('req.body:::', req.body);
       try {
