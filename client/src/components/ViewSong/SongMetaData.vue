@@ -5,6 +5,7 @@
 				<div class="song-title">{{song.title}}</div>
 				<div class="song-artist">{{song.artist}}</div>
 				<div class="song-genre">{{song.genre}}</div>
+				<v-btn class="cyan" @click="navigateTo({name: 'song-edit', params: {songId: song.id}})" dark>Edit</v-btn>
 			</v-flex>
 
 			<v-flex xs6>
@@ -18,14 +19,17 @@
 
 <!-- Everything inside the script tag controls the template -->
 <script>
-import Panel from '../Panel'
+import Panel from "../Panel";
 export default {
-   components: {
-      Panel
-   },
-   props: [
-      'song'
-   ]
+	components: {
+		Panel
+	},
+	methods: {
+		navigateTo(route) {
+			this.$router.push(route);
+		}
+	},
+	props: ["song"]
 };
 </script>
 

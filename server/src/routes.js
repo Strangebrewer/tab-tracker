@@ -11,9 +11,11 @@ module.exports = (app) => {
    app.post('/login', AuthenticationController.login);
 
    app.get('/songs/:songId', SongsController.show);
+   app.put('/songs/:id', SongsController.put);
+   app.delete('/songs/:id', SongsController.deleteAll);
+   
    app.get('/songs', SongsController.index);
    app.post('/songs', SongsController.post);
-   app.delete('/songs/:id', SongsController.deleteAll);
    app.delete('/songs', SongsController.deleteAll);
 
 

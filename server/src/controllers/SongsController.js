@@ -36,6 +36,18 @@ module.exports = {
       }
    },
 
+   async put(req, res) {
+      console.log('req.body:::', req.body);
+      try {
+         await db.Song.update(req.body, { where: { id: req.params.id } });
+         res.json(req.body);
+      } catch (err) {
+         res.status(500).send({
+            error: 'An error has occured trying to create the song.'
+         })
+      }
+   },
+
    async deleteAll(req, res) {
       try {
          const result = await db.Song.destroy({
