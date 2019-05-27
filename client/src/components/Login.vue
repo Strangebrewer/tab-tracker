@@ -8,7 +8,7 @@
 					<v-text-field v-model="password" type="password" label="password"></v-text-field>
 				</form>
 				<br>
-				<div class="error" v-html="error"/>
+				<div class="danger-alert" v-html="error"/>
 				<v-btn class="cyan" @click="login" dark>Log In</v-btn>
 			</panel>
 		</v-flex>
@@ -37,6 +37,7 @@ export default {
 				});
 				this.$store.dispatch("setToken", response.data.token);
 				this.$store.dispatch("setUser", response.data.user);
+				this.$router.push({ name: "songs" });
 			} catch (error) {
 				this.error = error.response.data.error;
 			}

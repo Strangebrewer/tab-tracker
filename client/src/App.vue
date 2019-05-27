@@ -33,4 +33,7 @@ export default {
 	padding-top: 60px;
 	background-color: #000;
 }
+.danger-alert {
+   color: red;
+}
 </style>

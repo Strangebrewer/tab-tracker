@@ -28,8 +28,6 @@ module.exports = {
             where: { email: email }
          });
 
-         console.log('user in login ctrlr:::', user);
-
          const login_error = { error: 'That\'s bogus info, doofy' }
          if (!user)
             return res.status(403).send({ error: 'That\'s a bogus email, doofy' })

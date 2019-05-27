@@ -3,7 +3,6 @@ const Op = db.Sequelize.Op;
 
 module.exports = {
    async index(req, res) {
-      console.log('req.query:::', req.query);
       try {
          let songs = null;
          const { search } = req.query;
@@ -30,7 +29,6 @@ module.exports = {
    },
 
    async show(req, res) {
-      console.log('req.params:::', req.params.id);
       try {
          const song = await db.Song.findByPk(req.params.id);
          res.json(song);
@@ -42,7 +40,6 @@ module.exports = {
    },
 
    async post(req, res) {
-      console.log('req.body:::', req.body);
       try {
          const song = await db.Song.create(req.body)
          res.json(song);
@@ -54,13 +51,12 @@ module.exports = {
    },
 
    async put(req, res) {
-      console.log('req.body:::', req.body);
       try {
          await db.Song.update(req.body, { where: { id: req.params.id } });
          res.json(req.body);
       } catch (err) {
          res.status(500).send({
-            error: 'An error has occured trying to create the song.'
+            error: 'An error has occured trying to update the song.'
          })
       }
    },
@@ -86,7 +82,7 @@ module.exports = {
          console.log('result in deleteOne in Songs ctrl:::', result);
       } catch (e) {
          res.status(500).send({
-            error: 'An error has occured trying to delete all songs.'
+            error: 'An error has occured trying to delete the song.'
          })
       }
    },

@@ -18,13 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       {
          hooks: {
             beforeCreate: hashPassword,
-            beforeUpdate: hashPassword,
-            beforeSave: hashPassword
+            beforeUpdate: hashPassword
          }
       }
    )
 
-   User.prototype.comparePassword = function (password) {  
+   User.prototype.comparePassword = async function (password) {
       return bcrypt.compareSync(password, this.password)
    }
 
