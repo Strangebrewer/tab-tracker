@@ -6,11 +6,7 @@
 
 <!-- Everything inside the script tag controls the template -->
 <script>
-import Panel from "../Panel";
 export default {
-	components: {
-		Panel
-	},
 	props: ["song"]
 };
 </script>

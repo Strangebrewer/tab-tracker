@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const { sequelize } = require('./models');
+const routes = require('./routes');
 const PORT = process.env.PORT || 8081;
 
 const app = express();
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(cors());
 
-require('./routes')(app);
+app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
    app.listen(PORT, () => {

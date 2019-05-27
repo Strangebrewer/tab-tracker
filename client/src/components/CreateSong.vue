@@ -25,7 +25,6 @@
 
 <!-- Everything inside the script tag controls the template -->
 <script>
-import Panel from "./Panel";
 import SongsService from "../services/SongsService";
 export default {
 	data() {
@@ -43,9 +42,6 @@ export default {
 			error: null,
 			required: value => !!value || "Required."
 		};
-	},
-	components: {
-		Panel
 	},
 	methods: {
 		async create() {
@@ -71,6 +67,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .danger-alert {
-   color: red;
+	color: red;
 }
 </style>

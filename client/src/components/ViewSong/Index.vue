@@ -25,7 +25,6 @@
 <!-- Everything inside the script tag controls the template -->
 <script>
 import SongsService from "@/services/SongsService";
-import Panel from "@/components/Panel";
 import SongMetadata from "./SongMetaData";
 import YouTube from "./YouTube";
 import Lyrics from "./Lyrics";
@@ -33,7 +32,6 @@ import Tab from "./Tab";
 
 export default {
 	components: {
-		Panel,
 		SongMetadata,
 		YouTube,
 		Lyrics,
@@ -47,8 +45,7 @@ export default {
 	async mounted() {
 		const songId = this.$store.state.route.params.songId;
 		this.song = (await SongsService.show(songId)).data;
-	},
-	props: ["song"]
+	}
 };
 </script>
 

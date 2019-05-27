@@ -1,24 +1,30 @@
+const router = require('express').Router();
+
 const AuthenticationController = require('./controllers/AuthenticationController');
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const SongsController = require('./controllers/SongsController');
 
 
-module.exports = (app) => {
-   app.post('/register',
-      AuthenticationControllerPolicy.register,
-      AuthenticationController.register
-   );
-   app.post('/login', AuthenticationController.login);
+router.post('/register',
+   AuthenticationControllerPolicy.register,
+   AuthenticationController.register
+);
 
-   app.get('/songs/:songId', SongsController.show);
-   app.put('/songs/:id', SongsController.put);
-   app.delete('/songs/:id', SongsController.deleteAll);
-   
-   app.get('/songs', SongsController.index);
-   app.post('/songs', SongsController.post);
-   app.delete('/songs', SongsController.deleteAll);
+router.post('/login', AuthenticationController.login);
+
+router.route('/songs/:id')
+   .get(SongsController.show)
+   .put(SongsController.put)
+   .delete(SongsController.deleteAll);
+
+router.route('/songs')
+   .get(SongsController.index)
+   .post(SongsController.post)
+   .delete(SongsController.deleteAll);
 
 
-   app.get('/users', AuthenticationController.getAllUsers);
-   app.delete('/users', AuthenticationController.deleteAllUsers);
-}
+router.route('/users')
+   .get(AuthenticationController.getAllUsers)
+   .delete(AuthenticationController.deleteAllUsers);
+
+module.exports = router;
