@@ -42,14 +42,14 @@ export default {
 		async setBookmark() {
 			try {
 				this.bookmark = (await BookmarksService.post({
-					songId: this.$route.params.songId,
-					userId: this.$store.state.user.id
+					songId: this.song.id
 				})).data;
 			} catch (e) {
 				console.log("e in bookmark:::", e);
 			}
 		},
 		async removeBookmark() {
+         console.log('this.bookmark.id:::', this.bookmark.id);
 			try {
 				await BookmarksService.delete(this.bookmark.id);
 				this.bookmark = null;
@@ -59,18 +59,22 @@ export default {
 		}
 	},
 	async mounted() {
-		if (!this.isUserLoggedIn) return;
+      if (!this.isUserLoggedIn) return;
+      console.log('songId:::', this.$route.params.songId);
 
 		try {
 			this.bookmark = (await BookmarksService.index({
 				// The songId below was originally 'this.song.id', which would grab the id from the song prop.
 				// The problem is, the song prop isn't yet present when this component mounts, so this query never worked right.
-				// I changed it to match the route params, which works, but using the song method in 'watch' (commented out below) also works.
+				// I changed it to extract the songId from the route params, which works, but using the song method in 'watch' (commented out below) also works.
 				// The watch method is probably a better practice since props won't usually be available as route params.
 				songId: this.$route.params.songId,
-				// songId: this.song.id,
-				userId: this.$store.state.user.id
-			})).data;
+				// songId: this.song.id
+         })).data[0];
+         
+         console.log('this.bookmark:::', this.bookmark);
+
+			// if (bookmarks.length) this.bookmark = bookmarks[0];
 		} catch (e) {
 			console.log("e in mounted SongMetaData:::", e);
 		}
@@ -82,9 +86,8 @@ export default {
 
 	// 		try {
 	// 			this.bookmark = (await BookmarksService.index({
-	// 				songId: this.song.id,
-	// 				userId: this.$store.state.user.id
-	// 			})).data;
+	// 				songId: this.song.id
+	// 			})).data[0];
 	// 		} catch (e) {
 	// 			console.log("e in mounted SongMetaData:::", e);
 	// 		}

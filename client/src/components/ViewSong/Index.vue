@@ -24,7 +24,9 @@
 
 <!-- Everything inside the script tag controls the template -->
 <script>
+import { mapState } from "vuex";
 import SongsService from "@/services/SongsService";
+import SongHistoryService from "@/services/SongHistoryService";
 import SongMetadata from "./SongMetaData";
 import YouTube from "./YouTube";
 import Lyrics from "./Lyrics";
@@ -37,6 +39,9 @@ export default {
 		Lyrics,
 		Tab
 	},
+	computed: {
+		...mapState(["isUserLoggedIn", "user", "route"])
+	},
 	data() {
 		return {
 			song: {}
@@ -45,6 +50,9 @@ export default {
 	async mounted() {
 		const songId = this.$store.state.route.params.songId;
 		this.song = (await SongsService.show(songId)).data;
+
+		if (this.isUserLoggedIn)
+			SongHistoryService.post({ songId });
 	}
 };
 </script>
