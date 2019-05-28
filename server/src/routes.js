@@ -2,6 +2,8 @@ const AuthenticationController = require('./controllers/AuthenticationController
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const SongsController = require('./controllers/SongsController');
 const BookmarksController = require('./controllers/BookmarksController');
+const HistoryController = require('./controllers/HistoryController');
+const isAuthenticated = require('./policies/isAuthenticated');
 
 module.exports = (app) => {
    app.post('/register',
@@ -13,23 +15,23 @@ module.exports = (app) => {
 
    app.route('/songs/:id')
       .get(SongsController.show)
-      .put(SongsController.put)
-      .delete(SongsController.deleteAll);
+      .put(SongsController.put);
 
    app.route('/songs')
       .get(SongsController.index)
-      .post(SongsController.post)
-      .delete(SongsController.deleteAll);
-
-
-   app.route('/users')
-      .get(AuthenticationController.getAllUsers)
-      .delete(AuthenticationController.deleteAllUsers);
+      .post(SongsController.post);
 
    app.route('/bookmarks/:id')
-      .delete(BookmarksController.delete)
+      .delete(isAuthenticated, BookmarksController.delete);
 
    app.route('/bookmarks')
-      .get(BookmarksController.index)
-      .post(BookmarksController.post)
+      .get(isAuthenticated, BookmarksController.index)
+      .post(isAuthenticated, BookmarksController.post);
+
+   app.route('/histories/:id')
+      .delete(isAuthenticated, HistoryController.delete);
+
+   app.route('/histories')
+      .get(isAuthenticated, HistoryController.index)
+      .post(isAuthenticated, HistoryController.post);
 };

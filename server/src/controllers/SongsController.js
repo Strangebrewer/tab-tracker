@@ -21,7 +21,6 @@ module.exports = {
          }
          res.json(songs);
       } catch (err) {
-         console.log('err:::', err.message);
          res.status(500).send({
             error: 'An error has occured trying to fetch songs.'
          })
@@ -57,42 +56,6 @@ module.exports = {
       } catch (err) {
          res.status(500).send({
             error: 'An error has occured trying to update the song.'
-         })
-      }
-   },
-
-   async deleteAll(req, res) {
-      try {
-         const result = await db.Song.destroy({
-            where: {}
-         })
-         console.log('result in deleteAll in Songs ctrl:::', result);
-      } catch (e) {
-         res.status(500).send({
-            error: 'An error has occured trying to delete all songs.'
-         })
-      }
-   },
-
-   async deleteOne(req, res) {
-      try {
-         const result = await db.Song.destroy({
-            where: { id: req.params.id }
-         })
-         console.log('result in deleteOne in Songs ctrl:::', result);
-      } catch (e) {
-         res.status(500).send({
-            error: 'An error has occured trying to delete the song.'
-         })
-      }
-   },
-
-   async template(req, res) {
-      try {
-
-      } catch (e) {
-         res.status(500).send({
-            error: 'An error has occured trying to do the thing.'
          })
       }
    }

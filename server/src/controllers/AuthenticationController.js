@@ -16,7 +16,7 @@ module.exports = {
          res.json({ user, token: jwtSignUser(user.toJSON()) });
       } catch (err) {
          res.status(400).send({
-            error: 'This email account is already in use.'
+            error: 'That email account is already in use.'
          })
       }
    },
@@ -28,7 +28,6 @@ module.exports = {
             where: { email: email }
          });
 
-         const login_error = { error: 'That\'s bogus info, doofy' }
          if (!user)
             return res.status(403).send({ error: 'That\'s a bogus email, doofy' })
 
@@ -41,27 +40,6 @@ module.exports = {
          res.send({
             error: e.message
          })
-      }
-   },
-
-   async getAllUsers(req, res) {
-      try {
-         const users = await User.findAll({});
-         res.json(users)
-      } catch (e) {
-
-      }
-   },
-
-   async deleteAllUsers(req, res) {
-      try {
-         await User.destroy({
-            where: {}
-         });
-         const users = await User.findAll({});
-         res.json(users);
-      } catch (e) {
-
       }
    }
 }
